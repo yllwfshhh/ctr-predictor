@@ -9,7 +9,10 @@ db.sqlite3
 db.sqlite3-journal
 
 # Model files and uploaded images
-media/
+media/*
+!media/model/
+media/model/*
+!media/model/*.pth
 
 # Environment
 .env
