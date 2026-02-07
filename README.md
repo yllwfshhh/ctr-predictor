@@ -22,13 +22,13 @@ ct-calculator/
 │   ├── urls.py                  # Main URL configuration
 │   ├── wsgi.py                  # WSGI config for deployment
 │   └── asgi.py                  # ASGI config for deployment
-├── model/                        # PyTorch model weight files (*.pth)
-│   ├── ctratio_model.pth        # CT ratio detection model
-│   ├── calcification_crop_model.pth  # Aortic calcification detection
-│   └── calcification_rank_model.pth  # Calcification ranking model
+├── static/                       # Project-level static files
+│   └── model/                    # PyTorch model weight files (*.pth)
+│       ├── ctratio_model.pth        # CT ratio detection model
+│       ├── calcification_crop_model.pth  # Aortic calcification detection
+│       └── calcification_rank_model.pth  # Calcification ranking model
 ├── media/                        # User-uploaded files and generated images
 │   └── ct_ratio/                # Output images
-├── static/                       # Project-level static files
 ├── manage.py                     # Django management script
 ├── db.sqlite3                    # SQLite database
 ├── environment.yml               # Conda environment specification
@@ -50,13 +50,23 @@ conda activate year3-project
 conda install -n year3-project jpeg libpng -y
 ```
 
-### 3. Run Database Migrations
+### 3. Download Model Files
+
+The application requires pre-trained PyTorch model files. Download them from:
+**https://drive.google.com/drive/folders/1L3D1ws_gr_ixLwyYsYelSLafcrYGHwv3?usp=sharing**
+
+Contact the repository owner for access if needed. Place the downloaded `.pth` files in the `static/model/` directory:
+- `ctratio_model.pth`
+- `calcification_crop_model.pth` 
+- `calcification_rank_model.pth`
+
+### 4. Run Database Migrations
 
 ```bash
 python manage.py migrate
 ```
 
-### 4. Start Development Server
+### 5. Start Development Server
 
 ```bash
 python manage.py runserver
@@ -97,6 +107,6 @@ The application uses three PyTorch deep learning models:
 
 ## Notes
 
-- Model files (*.pth) must be placed in the `model/` directory
+- Model files (*.pth) must be placed in the `static/model/` directory
 - Supports CPU and CUDA (GPU) inference
 - Images are automatically resized to 417x417 for processing
