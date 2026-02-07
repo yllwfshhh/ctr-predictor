@@ -1,0 +1,17 @@
+name: year3-project
+channels:
+  - pytorch
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - pytorch
+  - torchvision
+  - numpy
+  - opencv
+  - pillow
+  - jpeg
+  - libpng
+  - pip
+  - pip:
+    - Django==4.1.7
