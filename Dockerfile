@@ -1,14 +1,17 @@
 # Use an official Python image
 FROM python:3.9
 
-# Install system dependencies for OpenCV
+# Create a user to avoid running as root (Hugging Face requirement)
+RUN useradd -m -u 1000 user
+
+USER root
+
+# Install system dependencies for OpenCV and other image libraries
 RUN apt-get update && apt-get install -y \
-    libgl1-mesa-glx \
+    libgl1 \
     libglib2.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
-# Create a user to avoid running as root (Hugging Face requirement)
-RUN useradd -m -u 1000 user
 USER user
 ENV HOME=/home/user \
     PATH=/home/user/.local/bin:$PATH
