@@ -31,7 +31,7 @@ SECRET_KEY = 'django-insecure-+ro4+-zn(o2wf=@*wep29#)8%5$j^=_w-c26w_*6p^f#_&xn(q
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-
+CSRF_TRUSTED_ORIGINS = ["https://*.hf.space", "https://*.huggingface.co"]
 
 # Application definition
 
