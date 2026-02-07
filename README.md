@@ -1,3 +1,14 @@
+---
+title: CTR Predictor
+emoji: 🫁
+colorFrom: blue
+colorTo: green
+sdk: docker
+app_port: 7860
+pinned: false
+license: mit
+---
+
 # CTR Predictor - Cardiothoracic Ratio Analysis
 
 A Django web application for analyzing chest X-ray images to calculate CT ratio and detect aortic calcification using deep learning models.
