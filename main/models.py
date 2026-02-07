@@ -13,9 +13,9 @@ import torch.nn as nn
 # M1 : ct ratio
 # M2 : calcification crop
 # M3 : ranking prediction
-WEIGHTS_FILE_M1 = os.path.join(settings.BASE_DIR, 'static', 'model', 'ctratio_model.pth')
-WEIGHTS_FILE_M2 = os.path.join(settings.BASE_DIR, 'static', 'model', 'calcification_crop_model.pth')
-WEIGHTS_FILE_M3 = os.path.join(settings.BASE_DIR, 'static', 'model', 'calcification_rank_model.pth')
+WEIGHTS_FILE_M1 = os.path.join(settings.BASE_DIR, 'media', 'model', 'ctratio_model.pth')
+WEIGHTS_FILE_M2 = os.path.join(settings.BASE_DIR, 'media', 'model', 'calcification_crop_model.pth')
+WEIGHTS_FILE_M3 = os.path.join(settings.BASE_DIR, 'media', 'model', 'calcification_rank_model.pth')
 
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
@@ -122,6 +122,5 @@ def image_preprocess(pil_image):
 
 def crop_aortic(image,aortic_box):
     aortic_image =image.crop((aortic_box[0], aortic_box[1] , aortic_box[2], aortic_box[3]))
-    static_dir = os.path.join(settings.BASE_DIR, 'static')
-    image_path = os.path.join(static_dir, 'aortic_image.jpg')
+    image_path = os.path.join(settings.MEDIA_ROOT, 'aortic_image.jpg')
     aortic_image.save(image_path)

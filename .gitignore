@@ -9,10 +9,7 @@ db.sqlite3
 db.sqlite3-journal
 
 # Model files and uploaded images
-static/model/
-# static/ct_ratio/
-# static/*.jpg
-# static/*.png
+media/
 
 # Environment
 .env
