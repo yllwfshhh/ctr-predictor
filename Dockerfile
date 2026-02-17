@@ -22,10 +22,9 @@ WORKDIR $HOME/app
 COPY --chown=user . $HOME/app
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Create necessary directories and collect static files
+# Create necessary directories
 RUN mkdir -p media/ct_ratio && \
-    python manage.py migrate && \
-    python manage.py collectstatic --noinput
+    python manage.py migrate
 
 # Expose the port Hugging Face expects
 EXPOSE 7860
