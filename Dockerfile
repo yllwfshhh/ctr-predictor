@@ -30,4 +30,4 @@ RUN mkdir -p media/ct_ratio && \
 EXPOSE 7860
 
 # Command to run your Django app on port 7860
-CMD ["python", "manage.py", "runserver", "0.0.0.0:7860"]
+CMD ["sh", "-c", "echo 'Starting Django server...' && python manage.py runserver 0.0.0.0:7860 --noreload"]

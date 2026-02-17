@@ -17,35 +17,36 @@ def test(request):
 def predict(request):
     if request.method == 'POST':
         # Get the uploaded image from the request
-        if 'image' in request.FILES:
+        if 'image' in request.FILES and request.FILES['image']:
             uploaded_image = request.FILES['image']
             image_path = os.path.join(settings.MEDIA_ROOT, uploaded_image.name)
-            
             with open(image_path, 'wb') as f:
                 f.write(uploaded_image.read())
         else:
-            # Use default sample image if no image uploaded
-            image_path = os.path.join(settings.BASE_DIR, 'main', 'static', 'sample01.jpg')
-            uploaded_image = None
+            # Check if a sample image was selected
+            sample_image = request.POST.get('sample_image', 'sample01.jpg')
+            if not sample_image:
+                sample_image = 'sample01.jpg'
+            image_path = os.path.join(settings.BASE_DIR, 'main', 'static', sample_image)
 
-        # Load the saved image using PIL
+        # Load the image and save a copy for preview
         image = Image.open(image_path)
+        preview_path = os.path.join(settings.MEDIA_ROOT, 'ct_ratio', 'uploaded_image.jpg')
+        image.save(preview_path)
+        
+        # Process image
         tensor_image = image_preprocess(image)
-   
         ct_ratio, chest_box, heart_box = model1_predict(tensor_image)
-        aortic_box = model2_predict(tensor_image,image)
-
+        aortic_box = model2_predict(tensor_image, image)
         aortic_image = Image.open(os.path.join(settings.MEDIA_ROOT, "aortic_image.jpg"))
         rank = model3_predict(aortic_image)
+        chest_heart_border(image, chest_box, heart_box, aortic_box)
 
-
-        show_image_url = chest_heart_border(image,chest_box,heart_box,aortic_box)
         context = {
-            'uploaded_image_url': request.build_absolute_uri(settings.MEDIA_URL + uploaded_image.name) if uploaded_image else None,
-            'show_image_url' : request.build_absolute_uri(settings.MEDIA_URL + "ct_ratio/show_image.jpg"),
+            'uploaded_image_url': request.build_absolute_uri(settings.MEDIA_URL + "ct_ratio/uploaded_image.jpg"),
+            'show_image_url': request.build_absolute_uri(settings.MEDIA_URL + "ct_ratio/show_image.jpg"),
             'predicted_ratio': ct_ratio,
             'rank': rank,
-
         }
         return render(request, 'predict.html', context)
     return render(request, 'predict.html')

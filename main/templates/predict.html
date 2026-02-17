@@ -63,14 +63,15 @@
     <div class="predict-part" id="predictPart">
       <h1 style="color: azure;">Image Prediction</h1>
       <div class="upload-part" id="upload-part">
-      <form method="post" style=" margin-left: 30px;" enctype="multipart/form-data">
+      <form method="post" style=" margin-left: 30px;" enctype="multipart/form-data" id="predictForm">
           {% csrf_token %}
+          <input type="hidden" id="sample_image" name="sample_image" value="">
           <label for="image">Choose an image:</label>
           <input type="file" id="image" name="image" onchange="showChosen()">
           <button class="myButton" type="submit" onclick="showProcessing()">Predict</button>
       </form>
-      <button class="myButton" type="submit" onclick="showSample01()">Sample01</button>
-      <button class="myButton" type="submit" onclick="showSample02()">Sample02</button>
+      <button class="myButton" type="button" onclick="showSample01()">Sample01</button>
+      <button class="myButton" type="button" onclick="showSample02()">Sample02</button>
       </div>
 
     
@@ -78,7 +79,7 @@
     <div class="predict-part-container">
     <div class="predict-part-left" id="predict-part-left">
       <h2 style="display:none;" id="uploaded-image">Uploaded Image:</h2>
-      <img id="preview" src="#" alt="Image preview" style="display:none; width: 300px; height: 300px">
+      <img id="preview" src="{% if uploaded_image_url %}{{ uploaded_image_url }}{% else %}#{% endif %}" alt="Image preview" style="{% if show_image_url %}display:none;{% else %}{% if uploaded_image_url %}display:block;{% else %}display:none;{% endif %}{% endif %} width: 300px; height: 300px">
     </div>
 
     <div id="processing" style="display:none;position: absolute;top: 200px;left: 200px; font-size: 20px; ">
@@ -120,7 +121,7 @@
 
             <p id="rank">
               <div>
-              Rank: {{ rank }}
+              Calcification Rank: {{ rank }}
                   <div class="tooltip">
                   {% if  rank == 1 %}
                   <i class="fas fa-exclamation-circle" style="color: #e61919;"></i>
@@ -142,8 +143,8 @@
                     Analysis 
                 </h1>
                 <b>
-                    <p>your ct ratio is out of normal range</p>
-                    <p>need to be careful!</p>
+                    <p style="color: white;">your ct ratio is out of normal range</p>
+                    <p style="color: white;">need to be careful!</p>
                 </b>
                 <a href="#" 
                   class="box-close">
@@ -179,21 +180,38 @@
 <script>
 
   function showSample01() {
-    preview.src = '/static/sample01.jpg';
+    console.log('showSample01 called');
+    var preview = document.getElementById('preview');
+    console.log('Preview element:', preview);
+    preview.src = "{% static 'sample01.jpg' %}";
+    console.log('Sample01 clicked, src set to:', preview.src);
+    document.getElementById('sample_image').value = 'sample01.jpg';
+    document.getElementById('image').value = '';
     showPreview();
     }
   function showSample02() {
-    preview.src = '/static/sample02.jpg';
+    console.log('showSample02 called');
+    var preview = document.getElementById('preview');
+    console.log('Preview element:', preview);
+    preview.src = "{% static 'sample02.jpg' %}";
+    console.log('Sample02 clicked, src set to:', preview.src);
+    document.getElementById('sample_image').value = 'sample02.jpg';
+    document.getElementById('image').value = '';
     showPreview();
   }
   function showChosen() {
+    var preview = document.getElementById('preview');
     preview.src = URL.createObjectURL(event.target.files[0]);
+    document.getElementById('sample_image').value = '';
     showPreview();
   }
 
   function showPreview(){
+    console.log('showPreview called');
     var preview = document.getElementById('preview');
+    console.log('Preview display before:', preview.style.display);
     preview.style.display = "block";
+    console.log('Preview display after:', preview.style.display);
     // show text 'Uploaded Image'
     var text = document.getElementById('uploaded-image');
     text.style.display = "block";
@@ -205,9 +223,17 @@
     // show processing
     var processing = document.getElementById('processing');
     processing.style.display = "block";
-    // hide upload part
-    var div = document.getElementById("predict-part-left");
-    div.innerHTML = "";
+    // hide upload part (but keep preview visible)
+    var fileInput = document.querySelector('input[type="file"]');
+    if (fileInput) {
+      fileInput.style.display = "none";
+    }
+    var buttons = document.querySelectorAll('.myButton');
+    buttons.forEach(function(btn) {
+      if (btn.type !== 'submit') {
+        btn.style.display = "none";
+      }
+    });
     }
 
 
@@ -222,6 +248,12 @@
   var end_x = 350;
   var text_y = 70;
   var ratio = "{{ predicted_ratio }}";
+
+  // Add "CT Ratio" label
+  ctx.font = "bold 18px Arial";
+  ctx.fillStyle = "white";
+  ctx.textAlign = "left";
+  ctx.fillText("CT Ratio", start_x, 25);
 
   ctx.font = "15px Comic Sans MS";
   ctx.fillStyle = "white";
