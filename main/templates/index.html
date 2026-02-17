@@ -31,19 +31,18 @@
       <ul class="timeline">
           <li class="timeline-container left">
             <div class="content">
-          <h4>What is Cardiothoracic Ratio (CTR)</h4>
-          <p>CTR stands for Cardiothoracic Ratio, which is a measurement used to assess the size of the heart relative to the size of the chest.
-            The cardiothoracic ratio is measured on a PA chest x-ray, and is the ratio of maximal horizontal cardiac diameter to maximal horizontal thoracic diameter (inner edge of ribs/edge of pleura).</p>
+          <h4>Automated CTR Prediction Tool</h4>
+          <p>Developed a full-stack Django web application that automates Cardiothoracic Ratio (CTR) prediction, achieving 98.4% accuracy  using a Faster R-CNN model.</p>
           <div class="timeline-circle c1"></div>
           </div>
         </li>
         
           <li class="timeline-container right">
             <div class="content">
-            <h4>What does CTR tell us ?</h4>
-            <div>The CTR can still be used as an important parameter that can be easily determined in establishing enlargement of the heart.
-            A measurement >0.50 indicates that the heart is enlarged, which can be a sign of various underlying medical conditions such as heart failure, hypertension, or valvular heart disease. 
-            Therefore, CTR can provide important information about the patient's cardiac health and help guide their treatment plan. </div>
+            <h4>Saving Time and Decreasing Human Error</h4>
+            <div>Traditionally, measuring heart size on X-rays is done by hand. 
+              This AI tool automates the process, reducing the time needed by <b>67%</b>—from one minute down to just 20 seconds—while 
+              making the results more reliable for doctors.</div>
             <div class="timeline-circle c2 right" style="background-image: url('/static/background01.jpg');"></div>
           </div>
         </li>
@@ -52,8 +51,8 @@
       
           <li class="timeline-container left">
             <div class="content">
-            <h4>The usage of CTR for kidney dialysis patients</h4>
-            <div>Patients with chronic heart failure, long-term hypertension, or chronic kidney disease undergoing hemodialysis may often have a CTR greater than 0.5, indicating enlargement of the heart. This not only increases the risk of respiratory distress or hypotension during dialysis, but may also lead to arrhythmia. It also suggests that the patient may have excessive fluid in their body, requiring stricter fluid restriction or an increase in the amount of fluid removed during dialysis.</div>
+            <h4>Model Architecture</h4>
+            <div>I implemented a <b>Faster R-CNN</b> framework utilizing a <b>ResNet backbone</b> to achieve superior feature extraction. This architecture accurately segments the heart and lungs to calculate the CT ratio and identify calcification in real-time.</div>
             <div class="timeline-circle c3"></div>
           </div>
         </li>
@@ -63,7 +62,7 @@
           <li class="timeline-container right">
             <div class="content">
             <h4>Aortic calcification</h4>
-            <div>Aortic calcification refers to the buildup of calcium in the walls of the aorta, which is the body's largest artery that carries oxygen-rich blood from the heart to the rest of the body. Symptoms of aortic calcification are usually not noticeable until the condition is advanced and can lead to complications such as aneurysms, stroke, heart attack, and peripheral artery disease. Diagnosis of aortic calcification is usually done through imaging tests such as a chest X-ray, CT scan, or MRI. </div>
+            <div>This tool also looks for <b>calcium buildup</b> (calcification) and gives a simple <b>Health Rank</b>. This helps doctors quickly see which patients need the most <b>urgent care</b>.</div>
             <div class="timeline-circle c4 right"></div>
           </div>
         </li>
