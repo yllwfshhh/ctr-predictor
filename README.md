@@ -7,6 +7,7 @@ description: website deployed on Hugging Face Spaces.
 # CTR Predictor - Cardiothoracic Ratio Analysis
 
 A Django web application for analyzing chest X-ray images to calculate CT ratio and detect aortic calcification using deep learning models.
+link: https://rainforest10-ctr-predictor.hf.space/test/index/
 
 ## Project Structure
 
